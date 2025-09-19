@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Spam Detection</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Container with glass effect */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            width: 420px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Title */
+        h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Textarea styling */
+        textarea {
+            width: 100%;
+            height: 130px;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        textarea:focus {
+            box-shadow: 0px 0px 8px rgba(255,255,255,0.6);
+            transform: scale(1.02);
+        }
+
+        /* Button */
+        button {
+            background: #4e54c8;
+            background: linear-gradient(90deg, #4776e6, #8e54e9);
+            color: #fff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Result section */
+        .result {
+            margin-top: 25px;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .result.spam {
+            background: rgba(255, 77, 77, 0.2);
+            border: 1px solid rgba(255, 77, 77, 0.6);
+            color: #ff4d4d;
+        }
+        .result.ham {
+            background: rgba(77, 255, 136, 0.2);
+            border: 1px solid rgba(77, 255, 136, 0.6);
+            color: #4dff88;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Email Spam Detection</h2>
+        <form method="POST" action="/predict">
+            <textarea name="email_text" placeholder="✉️ Type or paste your email content here..."></textarea>
+            <button type="submit">Check Email</button>
+        </form>
+        {% if prediction_text %}
+        <div class="result {% if 'Spam' in prediction_text %}spam{% else %}ham{% endif %}">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
